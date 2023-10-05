@@ -42,17 +42,18 @@ class ApiKeyInterceptorTest
     }
 
     @Test
-    public void testValidApiKey() throws Exception
+    void testValidApiKey() throws Exception
     {
         when(request.getHeader("X-API-KEY")).thenReturn(apiKey);
+        when(request.getRequestURI()).thenReturn("/api/someEndpoint");
         assertTrue(apiKeyInterceptor.preHandle(request, response, new Object()));
     }
 
-
     @Test
-    public void testInvalidApiKey() throws Exception
+    void testInvalidApiKey() throws Exception
     {
         when(request.getHeader("X-API-KEY")).thenReturn("invalid-api-key");
+        when(request.getRequestURI()).thenReturn("/api/someEndpoint");
 
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
@@ -64,5 +65,17 @@ class ApiKeyInterceptorTest
         printWriter.flush();
         String responseOutput = stringWriter.toString();
         assertTrue(responseOutput.contains("\"errorMessage\":\"Invalid API Key\""));
+    }
+
+    @Test
+    void testNonApiRequestAllowedWithoutApiKey() throws Exception
+    {
+        when(request.getHeader("X-API-KEY")).thenReturn(null);
+        when(request.getRequestURI()).thenReturn("/nonApiEndpoint");
+
+        assertTrue(apiKeyInterceptor.preHandle(request, response, new Object()));
+
+        verify(response, times(0)).setStatus(
+            HttpServletResponse.SC_UNAUTHORIZED);
     }
 }

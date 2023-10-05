@@ -44,7 +44,7 @@ class InMemoryRateLimitFilterTest
     }
 
     @Test
-    public void testPassesWhenUnderRateLimit() throws IOException, ServletException
+    void testPassesWhenUnderRateLimit() throws IOException, ServletException
     {
         filter.doFilterInternal(request, response, filterChain);
         verify(filterChain, times(1)).doFilter(request, response);
@@ -52,7 +52,7 @@ class InMemoryRateLimitFilterTest
     }
 
     @Test
-    public void testFailsWhenOverRateLimit() throws IOException, ServletException
+    void testFailsWhenOverRateLimit() throws IOException, ServletException
     {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);

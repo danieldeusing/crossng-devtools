@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  crossng-devtools:
+    image: crossng-devtools
+    ports:
+      - "8080:8080"
+    environment:
+      - CONTEXT_BASE_URL=https://host.docker.internal:8888/

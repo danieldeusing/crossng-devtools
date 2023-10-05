@@ -20,7 +20,10 @@ public class ApiKeyInterceptor implements HandlerInterceptor
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
     {
-        if (!isValidApiKey(request.getHeader("X-API-KEY")))
+
+        String uri = request.getRequestURI();
+
+        if (uri.startsWith("/api") && (!isValidApiKey(request.getHeader("X-API-KEY"))))
         {
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("responseCode", 401);
@@ -33,9 +36,10 @@ public class ApiKeyInterceptor implements HandlerInterceptor
             response.getWriter().write(jsonResponse);
 
             return false;
+
         }
 
-        return true;
+        return true; // Allow all other requests to proceed
     }
 
     private boolean isValidApiKey(String apiKey)

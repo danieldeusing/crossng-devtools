@@ -32,7 +32,7 @@ class HealthServiceTest
     private RestTemplate restTemplate;
 
     @Test
-    public void checkContainerHealth_UP()
+    void checkContainerHealth_UP()
     {
         String healthCheckUrl = baseUrl + containerName + "/status/health";
         when(restTemplate.getForEntity(healthCheckUrl, String.class))
@@ -44,7 +44,7 @@ class HealthServiceTest
     }
 
     @Test
-    public void checkContainerHealth_DOWN_NoExpectedStatus()
+    void checkContainerHealth_DOWN_NoExpectedStatus()
     {
         String healthCheckUrl = baseUrl + containerName + "/status/health";
         when(restTemplate.getForEntity(healthCheckUrl, String.class))
@@ -57,7 +57,7 @@ class HealthServiceTest
     }
 
     @Test
-    public void checkContainerHealth_DOWN_HttpStatusCodeException()
+    void checkContainerHealth_DOWN_HttpStatusCodeException()
     {
         String healthCheckUrl = baseUrl + containerName + "/status/health";
         HttpClientErrorException
@@ -73,7 +73,7 @@ class HealthServiceTest
     }
 
     @Test
-    public void checkContainerHealth_DOWN_RestClientException()
+    void checkContainerHealth_DOWN_RestClientException()
     {
         String healthCheckUrl = baseUrl + containerName + "/status/health";
         when(restTemplate.getForEntity(healthCheckUrl, String.class))
@@ -86,7 +86,7 @@ class HealthServiceTest
     }
 
     @Test
-    public void checkContainerHealth_DOWN_NoContainer()
+    void checkContainerHealth_DOWN_NoContainer()
     {
         String nonExistingContainerName = "RANDOM";
         String healthCheckUrl = baseUrl + nonExistingContainerName + "/status/health";
