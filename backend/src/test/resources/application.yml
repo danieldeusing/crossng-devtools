@@ -1,0 +1,5 @@
+context:
+  base-url: http://localhost:1234/
+security:
+  api-key: valid-api-key
+  rate-limit: 5
