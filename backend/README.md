@@ -78,7 +78,7 @@ Contributions, issues, and feature requests are welcome! See [CONTRIBUTING.md](.
 
 ## License
 
-This project is [MIT](LICENSE) licensed.
+This project is [MIT](../LICENSE.md) licensed.
 
 ## Contact Information
 
