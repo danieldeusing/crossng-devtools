@@ -19,7 +19,7 @@ export class HealthStatusComponent implements OnInit, OnDestroy {
   displayedContainers: HealthContainer[] = [];
   displayedColumns: string[] = ['name', 'activeState', 'timestamp', 'status', 'errorCode', 'delete'];
   hideInactive: boolean = true;
-  refreshInterval = API_CONFIG.REFRESH_INTERVAL;
+  refreshInterval = Number(API_CONFIG.REFRESH_INTERVAL);
 
   private healthCheckSubscriptions: Subscription[] = [];
   private destroyed$ = new Subject<void>();
@@ -145,19 +145,17 @@ export class HealthStatusComponent implements OnInit, OnDestroy {
         // Staggering the requests using delay: index * 500 ensures half-second delay between each request
         const subscription = interval(this.refreshInterval + index * 500)
           .pipe(takeUntil(this.destroyed$))
-          .subscribe(() => {
-            this.healthCheckService.checkHealth(container.name).subscribe(status => {
+          .subscribe(
+            data => {
+              this.healthCheckService.checkHealth(container.name).subscribe(status => {
                 const targetContainer = this.containers.find(c => c.name === container.name);
                 if (targetContainer) {
                   targetContainer.status = status;
                   targetContainer.status.lastUpdated = new Date();
                   this.cdr.detectChanges();
                 }
-              },
-              error => {
-                console.error('Error checking health for:', container.name, error);
               });
-          });
+            });
         this.healthCheckSubscriptions.push(subscription);
       }
     });
