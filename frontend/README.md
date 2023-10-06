@@ -1,27 +1,95 @@
-# Frontend
+# CROSS Dev Tools Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+**Description**: A user-friendly interface to visualize the health status of your applications.
 
-## Development server
+## Table of Contents
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [Technical Details](#technical-details)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Running with Docker](#running-with-docker)
+- [UI Components](#ui-components)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact Information](#contact-information)
 
-## Code scaffolding
+## Technical Details
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Angular Version**: 16
+- **Other Technologies/Dependencies**:
+    - Angular Material
+    - RxJS
+    - Angular Material
 
-## Build
+## Prerequisites
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Node.js
+- npm
+- Docker (Optional)
 
-## Running unit tests
+## Getting Started
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. **Clone the Repository**
 
-## Running end-to-end tests
+    ```bash
+    git clone https://github.com/danieldeusing/crossng-devtools.git
+    ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. **Navigate to the Angular directory**
 
-## Further help
+    ```bash
+    cd crossng-devtools/frontend
+    ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3. **Install dependencies**
+
+    ```bash
+    npm install
+    ```
+
+4. **Run the application**
+
+    ```bash
+    ng serve
+    ```
+
+5. Visit `http://localhost:4200` in your browser.
+
+## Running with Docker
+
+
+1. **Build the Docker image**
+
+    ```bash
+    docker build -t crossng-devtools .
+    ```
+
+2. **Run the Docker container**
+
+    ```bash
+    docker run crossng-devtools
+    ```
+
+    or better take the docker-compose
+3. 
+    ```bash
+    docker-compose up -d
+    ```
+
+## UI Components
+
+- **Dashboard**: Not implemented yet.
+- **Health Details**: Dives deeper into individual application health metrics.
+- **TBD**: more to come
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome! See [CONTRIBUTING.md](../CONTRIBUTING.md) for details.
+
+## License
+
+This project is [MIT](LICENSE) licensed.
+
+## Contact Information
+
+- **Daniel Deusing** - mail@danieldeusing.de
