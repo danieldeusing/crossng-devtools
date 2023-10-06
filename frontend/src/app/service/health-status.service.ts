@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, Observable, of, tap} from 'rxjs';
 import {HealthStatusDTO} from '../model/health-status-dto.model';
@@ -13,7 +13,7 @@ export class HealthStatusService {
   private STORAGE_KEY = 'containers_state';
 
   private headers = new HttpHeaders({
-    'X-API-KEY': API_CONFIG.X_API_KEY
+    'X-API-KEY': API_CONFIG.SECURITY_X_API_KEY
   });
 
   // Default containers with initial active state
@@ -72,7 +72,7 @@ export class HealthStatusService {
   }
 
   checkHealth(appName: string): Observable<HealthStatusDTO> {
-    return this.http.get<HealthStatusDTO>(`${API_CONFIG.BASE_URL}check-health/${appName}`, {headers: this.headers})
+    return this.http.get<HealthStatusDTO>(`${API_CONFIG.BACKEND_URL}check-health/${appName}`, {headers: this.headers})
       .pipe(
         tap((status: HealthStatusDTO) => {
           const containers = this.getContainers();

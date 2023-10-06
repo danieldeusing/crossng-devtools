@@ -1,5 +1,5 @@
 context:
   base-url: https://localhost:8888/
 security:
-  api-key: 25dd30ec-7b0e-477c-9d9d-123ea7f60e9b
+  x_api-key: 25dd30ec-7b0e-477c-9d9d-123ea7f60e9b
   rate-limit: 120

@@ -5,6 +5,7 @@ import {interval, Subject, Subscription, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ResetDialogComponent} from '../reset-dialog/reset-dialog.component';
 import {AddContainerDialogComponent} from '../add-container-dialog/add-container-dialog.component';
+import {API_CONFIG} from '../../environment/config';
 
 @Component({
   selector: 'app-health-status',
@@ -18,7 +19,7 @@ export class HealthStatusComponent implements OnInit, OnDestroy {
   displayedContainers: HealthContainer[] = [];
   displayedColumns: string[] = ['name', 'activeState', 'timestamp', 'status', 'errorCode', 'delete'];
   hideInactive: boolean = true;
-  refreshInterval = 10000;
+  refreshInterval = API_CONFIG.REFRESH_INTERVAL;
 
   private healthCheckSubscriptions: Subscription[] = [];
   private destroyed$ = new Subject<void>();

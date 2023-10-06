@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 class ApiKeyInterceptorTest
 {
 
-    @Value("${security.api-key}")
+    @Value("${security.x_api-key}")
     private String apiKey;
 
     @SpyBean
