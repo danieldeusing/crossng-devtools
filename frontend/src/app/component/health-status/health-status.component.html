@@ -1,0 +1,87 @@
+<div class="button-group">
+  <div>
+    <button mat-raised-button color="primary" (click)="addContainer()">
+      <mat-icon>add</mat-icon>
+      <span class="button-span">Add Container</span>
+    </button>
+    <button mat-raised-button color="accent" (click)="toggleInactiveContainersVisibility()">
+      <mat-icon>{{hideInactive ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <span class="button-span">{{hideInactive ? 'Display Inactive' : 'Hide Inactive'}}</span>
+    </button>
+  </div>
+  <button mat-raised-button color="warn" (click)="openResetDialog()">
+    <mat-icon>restore</mat-icon>
+    <span class="button-span">Factory Reset</span>
+  </button>
+</div>
+
+<mat-table [dataSource]="displayedContainers" class="mat-elevation-z8">
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+    <mat-cell *matCellDef="let container"> {{container.name}} </mat-cell>
+  </ng-container>
+
+  <!-- Active State Toggle Column -->
+  <ng-container matColumnDef="activeState">
+    <mat-header-cell *matHeaderCellDef> Active</mat-header-cell>
+    <mat-cell *matCellDef="let container">
+      <input type="checkbox" [(ngModel)]="container.isActive" (change)="toggleContainerActive(container.name)">
+    </mat-cell>
+  </ng-container>
+
+  <!-- Timestamp Column -->
+  <ng-container matColumnDef="timestamp">
+    <mat-header-cell *matHeaderCellDef> Last Updated</mat-header-cell>
+    <mat-cell *matCellDef="let container">
+      <span [ngStyle]="{'color': getTimeDifferenceInSeconds(container.status?.lastUpdated) > (refreshInterval * 2 /
+      1000) ?
+      'red' : 'green'}">
+        {{getTimeDifferenceInSeconds(container.status?.lastUpdated)}}s ago
+      </span>
+    </mat-cell>
+  </ng-container>
+
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+    <mat-cell *matCellDef="let container">
+      <mat-icon *ngIf="container.status?.status === 'UP'" style="color: green;">check_circle</mat-icon>
+      <mat-icon *ngIf="container.status?.status === 'DOWN'" style="color: red;">error</mat-icon>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Error Code Column -->
+  <ng-container matColumnDef="errorCode">
+    <mat-header-cell *matHeaderCellDef> Error Code</mat-header-cell>
+    <mat-cell *matCellDef="let container"> {{container.status?.errorMessage}} </mat-cell>
+  </ng-container>
+
+  <!-- Delete Button Column -->
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef> Delete</mat-header-cell>
+    <mat-cell *matCellDef="let container">
+      <button mat-icon-button (click)="removeContainer(container.name)" aria-label="Delete Container">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Setting the table headers and rows -->
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div class="mat-body info">
+  <span>
+    <b>Info:</b>
+    <ul>
+      <li>All changes made will be stored in your local storage. There is no database persistence.</li>
+      <li>If you delete an item, it will be completely deleted, not just set to inactive. To get it back you have to
+        manually add it or do a factory reset.</li>
+      <li>Items are only getting updated if browser session is active. Backend has no scheduled task running.</li>
+    </ul>
+  </span>
+</div>

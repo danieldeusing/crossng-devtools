@@ -1,0 +1,22 @@
+button {
+  margin-right: 10px;
+}
+
+button[mat-raised-button] mat-icon {
+  margin-right: -4px;
+}
+
+.button-group {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-span {
+  margin-left: 10px;
+}
+
+.info {
+  margin-top: 30px;
+}

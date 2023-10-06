@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Add New Container</h2>
+<mat-dialog-content>
+  <mat-radio-group [(ngModel)]="selectedOption">
+    <mat-radio-button value="dropdown">Choose from inactive containers</mat-radio-button>
+    <mat-select *ngIf="selectedOption === 'dropdown'" placeholder="Select Container" [(ngModel)]="selectedContainer"
+                class="select">
+      <mat-option *ngFor="let container of inactiveContainers" [value]="container.name">
+        {{container.name}}
+      </mat-option>
+    </mat-select>
+
+    <mat-radio-button value="input">Input container name</mat-radio-button>
+    <mat-form-field *ngIf="selectedOption === 'input'">
+      <input matInput placeholder="Container name" [(ngModel)]="inputContainerName">
+    </mat-form-field>
+  </mat-radio-group>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()" color="warn">Cancel</button>
+  <button mat-button (click)="onConfirm()" color="primary">Confirm</button>
+</mat-dialog-actions>
