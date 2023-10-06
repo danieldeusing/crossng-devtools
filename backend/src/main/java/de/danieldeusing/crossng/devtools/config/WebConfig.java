@@ -17,10 +17,16 @@ public class WebConfig implements WebMvcConfigurer
         this.apiKeyInterceptor = apiKeyInterceptor;
     }
 
+
     @Override
     public void addCorsMappings(CorsRegistry registry)
     {
-        registry.addMapping("/**").allowedMethods("*");
+        registry.addMapping("/api/**")
+            .allowedOrigins("*")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("X-API-KEY", "Content-Type")
+            .allowCredentials(false)
+            .maxAge(3600);
     }
 
     @Override

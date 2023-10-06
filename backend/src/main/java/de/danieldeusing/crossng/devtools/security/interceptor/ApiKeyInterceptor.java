@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -20,6 +21,10 @@ public class ApiKeyInterceptor implements HandlerInterceptor
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
     {
+
+        if (request.getMethod().equals(HttpMethod.OPTIONS.name())) {
+            return true;
+        }
 
         String uri = request.getRequestURI();
 
@@ -39,7 +44,7 @@ public class ApiKeyInterceptor implements HandlerInterceptor
 
         }
 
-        return true; // Allow all other requests to proceed
+        return true;
     }
 
     private boolean isValidApiKey(String apiKey)

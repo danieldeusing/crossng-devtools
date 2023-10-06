@@ -40,17 +40,17 @@ public class HealthService
             }
             else
             {
-                return new HealthStatusDTO(500, "DOWN", "Service responded but without expected health status.");
+                return new HealthStatusDTO(200, "DOWN", "Service responded but without expected health status.");
             }
         }
         catch (HttpStatusCodeException e)
-        {  // Catching the specific exception
+        {
             String errorMessage = extractRelevantErrorMessage(e.getResponseBodyAsString());
-            return new HealthStatusDTO(e.getStatusCode().value(), "DOWN", errorMessage);
+            return new HealthStatusDTO(200, "DOWN", errorMessage);
         }
         catch (RestClientException e)
         {
-            return new HealthStatusDTO(500, "DOWN", e.getMessage());
+            return new HealthStatusDTO(200, "DOWN", e.getMessage());
         }
     }
 
