@@ -1,4 +1,4 @@
-# CROSS App Health Check
+# CROSS Dev Tools Backend
 
 **Description**: Simply checks the health status of your applications
 
