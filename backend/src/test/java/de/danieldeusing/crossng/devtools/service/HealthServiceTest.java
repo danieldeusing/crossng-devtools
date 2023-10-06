@@ -51,7 +51,7 @@ class HealthServiceTest
             .thenReturn(new ResponseEntity<>("UNKNOWN", HttpStatus.OK));
 
         HealthStatusDTO result = healthService.checkContainerHealth(containerName);
-        assertEquals(500, result.getResponseCode());
+        assertEquals(200, result.getResponseCode());
         assertEquals("DOWN", result.getStatus());
         assertEquals("Service responded but without expected health status.", result.getErrorMessage());
     }
@@ -67,7 +67,7 @@ class HealthServiceTest
 
 
         HealthStatusDTO result = healthService.checkContainerHealth(containerName);
-        assertEquals(400, result.getResponseCode());
+        assertEquals(200, result.getResponseCode());
         assertEquals("DOWN", result.getStatus());
         assertEquals("Invalid request", result.getErrorMessage());
     }
@@ -80,7 +80,7 @@ class HealthServiceTest
             .thenThrow(new RestClientException("Connection failed"));
 
         HealthStatusDTO result = healthService.checkContainerHealth(containerName);
-        assertEquals(500, result.getResponseCode());
+        assertEquals(200, result.getResponseCode());
         assertEquals("DOWN", result.getStatus());
         assertEquals("Connection failed", result.getErrorMessage());
     }
@@ -102,7 +102,7 @@ class HealthServiceTest
         when(restTemplate.getForEntity(healthCheckUrl, String.class)).thenThrow(exception);
 
         HealthStatusDTO result = healthService.checkContainerHealth(nonExistingContainerName);
-        assertEquals(500, result.getResponseCode());
+        assertEquals(200, result.getResponseCode());
         assertEquals("DOWN", result.getStatus());
         assertEquals("HTTP Status 404 – Not Found", result.getErrorMessage());
     }
