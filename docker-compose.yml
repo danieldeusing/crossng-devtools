@@ -7,3 +7,7 @@ services:
       - "8080:8080"
     environment:
       - CONTEXT_BASE_URL=https://host.docker.internal:8888/
+      - SECURITY_RATE_LIMIT=120
+      - SECURITY_X_API_KEY=25dd30ec-7b0e-477c-9d9d-123ea7f60e9b
+      - BACKEND_URL=http://localhost:8080/api/
+      - REFRESH_INTERVAL=10000

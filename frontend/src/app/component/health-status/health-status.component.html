@@ -35,9 +35,8 @@
   <ng-container matColumnDef="timestamp">
     <mat-header-cell *matHeaderCellDef> Last Updated</mat-header-cell>
     <mat-cell *matCellDef="let container">
-      <span [ngStyle]="{'color': getTimeDifferenceInSeconds(container.status?.lastUpdated) > (refreshInterval * 2 /
-      1000) ?
-      'red' : 'green'}">
+      <span *ngIf="container.status?.lastUpdated"
+            [ngStyle]="{'color': getTimeDifferenceInSeconds(container.status?.lastUpdated) > (refreshInterval * 2 / 1000) ? 'red' : 'green'}">
         {{getTimeDifferenceInSeconds(container.status?.lastUpdated)}}s ago
       </span>
     </mat-cell>

@@ -16,7 +16,10 @@ COPY --from=angular-build /frontend/dist/frontend /backend/src/main/resources/st
 RUN mvn -e -B clean package
 
 # ---- Create Image ----
-FROM openjdk:18
+FROM openjdk:18-jdk-slim
 WORKDIR /app
 COPY --from=spring-build /backend/target/crossng-devtools.jar /app/crossng-devtools.jar
-ENTRYPOINT ["java", "-jar", "crossng-devtools.jar"]
+COPY --from=angular-build /frontend/dist/frontend/assets /app/assets
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]

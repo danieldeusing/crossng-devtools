@@ -15,7 +15,7 @@ import java.util.Map;
 public class ApiKeyInterceptor implements HandlerInterceptor
 {
 
-    @Value("${security.api-key}")
+    @Value("${security.x_api-key}")
     private String apiKey;
 
     @Override
