@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.HttpMethod;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -46,6 +47,7 @@ class ApiKeyInterceptorTest
     {
         when(request.getHeader("X-API-KEY")).thenReturn(apiKey);
         when(request.getRequestURI()).thenReturn("/api/someEndpoint");
+        when(request.getMethod()).thenReturn(HttpMethod.GET.name());
         assertTrue(apiKeyInterceptor.preHandle(request, response, new Object()));
     }
 
@@ -54,6 +56,7 @@ class ApiKeyInterceptorTest
     {
         when(request.getHeader("X-API-KEY")).thenReturn("invalid-api-key");
         when(request.getRequestURI()).thenReturn("/api/someEndpoint");
+        when(request.getMethod()).thenReturn(HttpMethod.GET.name());
 
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
@@ -72,6 +75,7 @@ class ApiKeyInterceptorTest
     {
         when(request.getHeader("X-API-KEY")).thenReturn(null);
         when(request.getRequestURI()).thenReturn("/nonApiEndpoint");
+        when(request.getMethod()).thenReturn(HttpMethod.GET.name());
 
         assertTrue(apiKeyInterceptor.preHandle(request, response, new Object()));
 
