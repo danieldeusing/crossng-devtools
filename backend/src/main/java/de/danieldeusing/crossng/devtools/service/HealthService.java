@@ -1,7 +1,7 @@
 package de.danieldeusing.crossng.devtools.service;
 
 import de.danieldeusing.crossng.devtools.model.HealthStatusDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.danieldeusing.crossng.devtools.util.WebUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,6 @@ public class HealthService
     @Value("${context.base-url}")
     private String baseUrl;
 
-    @Autowired
     public HealthService(RestTemplate restTemplate)
     {
         this.restTemplate = restTemplate;
@@ -28,7 +27,7 @@ public class HealthService
 
     public HealthStatusDTO checkContainerHealth(String containerName)
     {
-        String healthCheckUrl = baseUrl + containerName + "/status/health";
+        String healthCheckUrl = WebUtil.getFormattedTargeturl(baseUrl, containerName + "/status/health");
 
         try
         {

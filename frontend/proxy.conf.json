@@ -1,0 +1,8 @@
+{
+    "/crossng-systemmanagement": {
+        "target": "https://localhost:8888",
+        "secure": false,
+        "changeOrigin": true,
+        "ws": true
+    }
+}

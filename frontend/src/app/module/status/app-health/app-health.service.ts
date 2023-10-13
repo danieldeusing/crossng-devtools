@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, Observable, of, tap} from 'rxjs';
-import {HealthStatusDTO} from '../model/health-status-dto.model';
-import {API_CONFIG} from '../environment/config';
-import {HealthContainer} from '../model/health-container.model';
+import {AppHealthStatusDTO} from '../../../model/dto/app-health-status-dto.model';
+import {API_CONFIG} from '../../../environment/config';
+import {AppHealth} from '../../../model/app-health.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HealthStatusService {
+export class AppHealthService {
 
   private STORAGE_KEY = 'containers_state';
 
@@ -17,7 +17,7 @@ export class HealthStatusService {
   });
 
   // Default containers with initial active state
-  private defaultContainerStates: HealthContainer[] = [
+  private defaultContainerStates: AppHealth[] = [
     {name: "crossng-ais", isActive: true},
     {name: "crossng-common-magellan", isActive: true},
     {name: "crossng-communicator", isActive: true},
@@ -71,10 +71,11 @@ export class HealthStatusService {
     }
   }
 
-  checkHealth(appName: string): Observable<HealthStatusDTO> {
-    return this.http.get<HealthStatusDTO>(`${API_CONFIG.BACKEND_URL}check-health/${appName}`, {headers: this.headers})
+  checkHealth(appName: string): Observable<AppHealthStatusDTO> {
+    return this.http.get<AppHealthStatusDTO>(`${this.getSanitizedBaseUrl()}/check-health/${appName}`,
+      {headers: this.headers})
       .pipe(
-        tap((status: HealthStatusDTO) => {
+        tap((status: AppHealthStatusDTO) => {
           const containers = this.getContainers();
           const container = containers.find(c => c.name === appName);
           if (container) {
@@ -87,7 +88,7 @@ export class HealthStatusService {
           const containers = this.getContainers();
           const container = containers.find(c => c.name === appName);
           const currentTime = new Date();
-          const defaultErrorResponse: HealthStatusDTO = {
+          const defaultErrorResponse: AppHealthStatusDTO = {
             responseCode: error.status,
             status: 'DOWN',
             errorMessage: error?.error?.errorMessage ? `${error.error.errorMessage}`
@@ -104,12 +105,12 @@ export class HealthStatusService {
   }
 
 
-  getContainers(): HealthContainer[] {
+  getContainers(): AppHealth[] {
     const containers = localStorage.getItem(this.STORAGE_KEY);
     return containers ? JSON.parse(containers) : [];
   }
 
-  setContainers(containers: HealthContainer[]): void {
+  setContainers(containers: AppHealth[]): void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(containers));
   }
 
@@ -134,13 +135,12 @@ export class HealthStatusService {
     this.setContainers(updatedContainers);
   }
 
-  isContainerActive(containerName: string): boolean {
-    const container = this.getContainers().find(c => c.name === containerName);
-    return container ? container.isActive : false;
-  }
-
   factoryReset(): void {
     localStorage.removeItem(this.STORAGE_KEY);
     this.setContainers(this.defaultContainerStates);
+  }
+
+  private getSanitizedBaseUrl(): string {
+    return API_CONFIG.BACKEND_URL.endsWith('/') ? API_CONFIG.BACKEND_URL.slice(0, -1) : API_CONFIG.BACKEND_URL;
   }
 }

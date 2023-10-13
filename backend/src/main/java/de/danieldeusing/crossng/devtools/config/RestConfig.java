@@ -1,5 +1,7 @@
 package de.danieldeusing.crossng.devtools.config;
 
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.cookie.BasicCookieStore;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
@@ -12,20 +14,16 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class RestConfig
-{
+public class RestConfig {
 
     @Bean
-    public RestTemplate restTemplate()
-    {
+    public RestTemplate restTemplate() {
         CloseableHttpClient httpClient = getHttpClient();
         return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
     }
 
-    private CloseableHttpClient getHttpClient()
-    {
-        try
-        {
+    private CloseableHttpClient getHttpClient() {
+        try {
             return HttpClients.custom()
                 .setConnectionManager(
                     PoolingHttpClientConnectionManagerBuilder.create()
@@ -38,11 +36,13 @@ public class RestConfig
                                 .setHostnameVerifier((s, sslSession) -> true)
                                 .build())
                         .build())
+                .setDefaultRequestConfig(RequestConfig.custom()
+                    .setRedirectsEnabled(false)
+                    .build())
                 .build();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 }
+

@@ -1,20 +1,20 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {HealthContainer} from '../../model/health-container.model';
+import {AppHealth} from '../../../../model/app-health.model';
 
 @Component({
-  selector: 'app-add-container-dialog',
-  templateUrl: './add-container-dialog.component.html',
-  styleUrls: ['./add-container-dialog.component.scss']
+  selector: 'app-status-app-health-add-app-dialog',
+  templateUrl: './add-app-dialog.component.html',
+  styleUrls: ['./add-app-dialog.component.scss']
 })
-export class AddContainerDialogComponent {
+export class AddAppDialogComponent {
 
   selectedOption: 'dropdown' | 'input' = 'dropdown';
-  inactiveContainers: HealthContainer[];
+  inactiveContainers: AppHealth[];
   selectedContainer: string = "";
   inputContainerName: string = "";
 
-  constructor(public dialogRef: MatDialogRef<AddContainerDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<AddAppDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.inactiveContainers = data.inactiveContainers;
   }

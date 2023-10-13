@@ -1,0 +1,6 @@
+server:
+  ssl:
+    key-store: backend/keystore.p12
+    key-store-password: mypassword
+    key-store-type: PKCS12
+  port: 8080
