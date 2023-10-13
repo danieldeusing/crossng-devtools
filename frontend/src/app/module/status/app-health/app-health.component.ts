@@ -150,14 +150,16 @@ export class AppHealthComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.destroyed$))
           .subscribe(
             data => {
-              this.healthCheckService.checkHealth(container.name).subscribe(status => {
-                const targetContainer = this.containers.find(c => c.name === container.name);
-                if (targetContainer) {
-                  targetContainer.status = status;
-                  targetContainer.status.lastUpdated = new Date();
-                  this.cdr.detectChanges();
-                }
-              });
+              this.healthCheckService.checkHealth(container.name)
+                .pipe(takeUntil(this.destroyed$))
+                .subscribe(status => {
+                  const targetContainer = this.containers.find(c => c.name === container.name);
+                  if (targetContainer) {
+                    targetContainer.status = status;
+                    targetContainer.status.lastUpdated = new Date();
+                    this.cdr.detectChanges();
+                  }
+                });
             });
         this.healthCheckSubscriptions.push(subscription);
       }
