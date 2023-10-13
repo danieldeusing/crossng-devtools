@@ -1,0 +1,5 @@
+<div *ngFor="let breadcrumb of breadcrumbs; let last = last" class="breadcrumb">
+  <a *ngIf="!last" [routerLink]="breadcrumb.url" mat-button>{{ breadcrumb.label }}</a>
+  <span *ngIf="last" mat-stroked-button>{{ breadcrumb.label }}</span>
+  <mat-icon *ngIf="!last">chevron_right</mat-icon>
+</div>

@@ -3,3 +3,13 @@ context:
 security:
   x_api-key: 25dd30ec-7b0e-477c-9d9d-123ea7f60e9b
   rate-limit: 120
+crossng:
+  ldap:
+    username: admin
+    password: Wwmlo$4U
+server:
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: mypassword
+    key-store-type: PKCS12
+  port: 8443

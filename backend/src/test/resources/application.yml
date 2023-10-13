@@ -3,3 +3,7 @@ context:
 security:
   x_api-key: valid-api-key
   rate-limit: 5
+crossng:
+  ldap:
+    username: admin
+    password: random

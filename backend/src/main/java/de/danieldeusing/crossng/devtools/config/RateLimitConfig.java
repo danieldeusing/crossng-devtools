@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import static de.danieldeusing.crossng.devtools.util.WebConstants.API_BASE_PATH;
 
 @Configuration
-public class FilterConfig
+public class RateLimitConfig
 {
     @Value("${security.rate-limit:120}")
     private long rateLimitPerMinute;

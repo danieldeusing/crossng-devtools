@@ -12,6 +12,7 @@ WORKDIR /backend
 COPY backend/pom.xml ./
 RUN mvn -e -B dependency:resolve dependency:resolve-plugins
 COPY backend/src ./src
+COPY backend/keystore.p12 /backend/src/main/resources/keystore.p12
 COPY --from=angular-build /frontend/dist/frontend /backend/src/main/resources/static
 RUN mvn -e -B clean package
 

@@ -1,0 +1,47 @@
+.breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+
+  a {
+    margin-right: 5px;
+    color: #3f51b5;
+    transition: color 0.3s ease;
+
+    &:hover {
+      text-decoration: underline;
+      color: darken(#3f51b5, 10%);
+    }
+  }
+
+  mat-icon {
+    font-size: 1.2rem;
+    vertical-align: middle;
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.breadcrumb-item {
+  color: #3f51b5;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.breadcrumb-item.active {
+  font-weight: bold;
+  color: #000;
+}
+
+.separator {
+  margin: 0 5px;
+}
+
+span[mat-stroked-button] {
+  background: none;
+  border: none;
+  cursor: default;
+}

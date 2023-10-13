@@ -1,0 +1,15 @@
+mat-toolbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  button {
+    margin-right: 15px;
+  }
+
+  button:last-child {
+    margin-right: 0;
+  }
+}
+
+mat-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}

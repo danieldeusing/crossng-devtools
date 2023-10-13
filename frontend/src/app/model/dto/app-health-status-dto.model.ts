@@ -1,4 +1,4 @@
-export class HealthStatusDTO {
+export class AppHealthStatusDTO {
   responseCode!: number;
   status!: string;
   lastUpdated?: Date;

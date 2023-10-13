@@ -1,22 +1,22 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {HealthStatusService} from '../../service/health-status.service';
-import {HealthContainer} from '../../model/health-container.model';
+import {AppHealthService} from './app-health.service';
+import {AppHealth} from '../../../model/app-health.model';
 import {interval, Subject, Subscription, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {ResetDialogComponent} from '../reset-dialog/reset-dialog.component';
-import {AddContainerDialogComponent} from '../add-container-dialog/add-container-dialog.component';
-import {API_CONFIG} from '../../environment/config';
+import {ConfirmDialogComponent} from '../../../component/common/confirm-dialog/confirm-dialog.component';
+import {AddAppDialogComponent} from './add-app-dialog/add-app-dialog.component';
+import {API_CONFIG} from '../../../environment/config';
 
 @Component({
-  selector: 'app-health-status',
-  templateUrl: './health-status.component.html',
-  styleUrls: ['./health-status.component.scss'],
+  selector: 'app-status-app-health',
+  templateUrl: './app-health.component.html',
+  styleUrls: ['./app-health.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HealthStatusComponent implements OnInit, OnDestroy {
+export class AppHealthComponent implements OnInit, OnDestroy {
 
-  containers: HealthContainer[] = [];
-  displayedContainers: HealthContainer[] = [];
+  containers: AppHealth[] = [];
+  displayedContainers: AppHealth[] = [];
   displayedColumns: string[] = ['name', 'activeState', 'timestamp', 'status', 'errorCode', 'delete'];
   hideInactive: boolean = true;
   refreshInterval = Number(API_CONFIG.REFRESH_INTERVAL);
@@ -24,7 +24,7 @@ export class HealthStatusComponent implements OnInit, OnDestroy {
   private healthCheckSubscriptions: Subscription[] = [];
   private destroyed$ = new Subject<void>();
 
-  constructor(public healthCheckService: HealthStatusService,
+  constructor(public healthCheckService: AppHealthService,
               private dialog: MatDialog,
               private cdr: ChangeDetectorRef) {
   }
@@ -57,7 +57,7 @@ export class HealthStatusComponent implements OnInit, OnDestroy {
 
   addContainer(): void {
     const inactiveContainers = this.containers.filter(container => !container.isActive);
-    const dialogRef = this.dialog.open(AddContainerDialogComponent, {
+    const dialogRef = this.dialog.open(AddAppDialogComponent, {
       width: '350px',
       data: {inactiveContainers: inactiveContainers}
     });
@@ -87,8 +87,12 @@ export class HealthStatusComponent implements OnInit, OnDestroy {
   }
 
   openResetDialog(): void {
-    const dialogRef = this.dialog.open(ResetDialogComponent, {
-      width: '450px'
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '450px',
+      data: {
+        title: 'Factory Reset',
+        text: 'Do you really want to factory reset your settings?'
+      }
     });
 
     dialogRef.afterClosed()
@@ -127,7 +131,7 @@ export class HealthStatusComponent implements OnInit, OnDestroy {
     return Math.floor(timeDifference / 1000);
   }
 
-  private sortContainers(containers: HealthContainer[]): HealthContainer[] {
+  private sortContainers(containers: AppHealth[]): AppHealth[] {
     return containers.sort((a, b) => {
       if (a.isActive === b.isActive) {
         return a.name.localeCompare(b.name);
@@ -142,7 +146,6 @@ export class HealthStatusComponent implements OnInit, OnDestroy {
 
     this.containers.forEach((container, index) => {
       if (container.isActive) {
-        // Staggering the requests using delay: index * 500 ensures half-second delay between each request
         const subscription = interval(this.refreshInterval + index * 500)
           .pipe(takeUntil(this.destroyed$))
           .subscribe(

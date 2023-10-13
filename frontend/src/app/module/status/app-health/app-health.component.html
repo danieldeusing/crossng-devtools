@@ -19,21 +19,21 @@
 
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> <b>Name</b></mat-header-cell>
     <mat-cell *matCellDef="let container"> {{container.name}} </mat-cell>
   </ng-container>
 
   <!-- Active State Toggle Column -->
   <ng-container matColumnDef="activeState">
-    <mat-header-cell *matHeaderCellDef> Active</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> <b>Active</b></mat-header-cell>
     <mat-cell *matCellDef="let container">
-      <input type="checkbox" [(ngModel)]="container.isActive" (change)="toggleContainerActive(container.name)">
+      <input type="checkbox" [checked]="container.isActive" (change)="toggleContainerActive(container.name)">
     </mat-cell>
   </ng-container>
 
   <!-- Timestamp Column -->
   <ng-container matColumnDef="timestamp">
-    <mat-header-cell *matHeaderCellDef> Last Updated</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> <b>Last Updated</b></mat-header-cell>
     <mat-cell *matCellDef="let container">
       <span *ngIf="container.status?.lastUpdated"
             [ngStyle]="{'color': getTimeDifferenceInSeconds(container.status?.lastUpdated) > (refreshInterval * 2 / 1000) ? 'red' : 'green'}">
@@ -45,7 +45,7 @@
 
   <!-- Status Column -->
   <ng-container matColumnDef="status">
-    <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> <b>Last Status</b></mat-header-cell>
     <mat-cell *matCellDef="let container">
       <mat-icon *ngIf="container.status?.status === 'UP'" style="color: green;">check_circle</mat-icon>
       <mat-icon *ngIf="container.status?.status === 'DOWN'" style="color: red;">error</mat-icon>
@@ -54,13 +54,13 @@
 
   <!-- Error Code Column -->
   <ng-container matColumnDef="errorCode">
-    <mat-header-cell *matHeaderCellDef> Error Code</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> <b>Error Code</b></mat-header-cell>
     <mat-cell *matCellDef="let container"> {{container.status?.errorMessage}} </mat-cell>
   </ng-container>
 
   <!-- Delete Button Column -->
   <ng-container matColumnDef="delete">
-    <mat-header-cell *matHeaderCellDef> Delete</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> <b>Delete</b></mat-header-cell>
     <mat-cell *matCellDef="let container">
       <button mat-icon-button (click)="removeContainer(container.name)" aria-label="Delete Container">
         <mat-icon>delete</mat-icon>

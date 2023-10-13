@@ -1,0 +1,24 @@
+<ng-container *ngIf="loginError; else tableContainer">
+  <div class="error-container">
+    <p>Please log in to CROSS in another tab.</p>
+  </div>
+</ng-container>
+
+<ng-template #tableContainer>
+  <table mat-table [dataSource]="appStatuses">
+    <ng-container matColumnDef="applicationId">
+      <th mat-header-cell *matHeaderCellDef> <b>Application Name</b> </th>
+      <td mat-cell *matCellDef="let element"> {{element.applicationId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isOnline">
+      <th mat-header-cell *matHeaderCellDef> <b>Activated</b> </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon [style.color]="element.isOnline ? 'green' : 'red'">{{element.isOnline ? 'check_circle' : 'cancel'}}</mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['applicationId', 'isOnline']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['applicationId', 'isOnline'];"></tr>
+  </table>
+</ng-template>

@@ -4,10 +4,13 @@ services:
   crossng-devtools:
     image: crossng-devtools
     ports:
-      - "8080:8080"
+      - "8889:8443"
     environment:
       - CONTEXT_BASE_URL=https://host.docker.internal:8888/
       - SECURITY_RATE_LIMIT=120
       - SECURITY_X_API_KEY=25dd30ec-7b0e-477c-9d9d-123ea7f60e9b
-      - BACKEND_URL=http://localhost:8080/api/
+      - BACKEND_URL=https://localhost:8889/api/
       - REFRESH_INTERVAL=10000
+      - CROSS_URL=https://localhost:8888/
+      - CROSSNG_LDAP_USER=admin
+      - CROSSNG_LDAP_PASSWORD=Wwmlo$4U

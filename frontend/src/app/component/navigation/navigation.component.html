@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <button mat-button routerLink="/">
+    <mat-icon>home</mat-icon>
+  </button>
+
+  <ng-container *ngFor="let category of categorizedRoutes | keyvalue">
+    <mat-menu #categoryMenu="matMenu">
+      <button *ngFor="let route of category.value" mat-menu-item
+              [routerLink]="['/' + category.key.toLowerCase() + '/' + route.path]">
+        {{ route.data?.['breadcrumb'] }}
+      </button>
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="categoryMenu">
+      {{ category.key }}
+    </button>
+  </ng-container>
+
+</mat-toolbar>
+
+<div style="margin: 20px;">
+  <app-breadcrumb></app-breadcrumb>
+  <router-outlet></router-outlet>
+</div>
