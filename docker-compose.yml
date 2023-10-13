@@ -4,7 +4,7 @@ services:
   crossng-devtools:
     image: crossng-devtools
     ports:
-      - "8889:8080"
+      - "8889:8443"
     environment:
       - CONTEXT_BASE_URL=https://host.docker.internal:8888/
       - SECURITY_RATE_LIMIT=120

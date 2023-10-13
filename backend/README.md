@@ -51,7 +51,7 @@
     mvn spring-boot:run
     ```
 
-5. Visit `http://localhost:8080` in your browser.
+5. Visit `https://localhost:8443` in your browser.
 
 ## Running with Docker
 
@@ -64,7 +64,7 @@
 2. **Run the Docker container**
 
     ```bash
-    docker run -p 8080:8080 crossng-devtools
+    docker run -p 8443:8443 crossng-devtools
     ```
 
 ## API Endpoints

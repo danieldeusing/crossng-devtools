@@ -3,4 +3,4 @@ server:
     key-store: classpath:keystore.p12
     key-store-password: mypassword
     key-store-type: PKCS12
-  port: 8080
+  port: 8443
